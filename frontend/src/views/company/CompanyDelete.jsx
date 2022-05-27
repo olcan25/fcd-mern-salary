@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { deleteCompanyApiRequest } from "../../store/company/actions/company.action.thunk";
+import { singleDeleteFile } from "../../api/file.service";
 
 const CompanyDelete = () => {
   const location = useLocation();
@@ -8,8 +9,17 @@ const CompanyDelete = () => {
   const dispatch = useDispatch();
 
   const onDelete = (id) => {
+    fileDelete({ path: location.state.filePath });
     dispatch(deleteCompanyApiRequest(id));
     navigate("/companies");
+  };
+
+  const fileDelete = (path) => {
+    if (path) {
+      singleDeleteFile(path).then((res) => {
+        console.log(res);
+      });
+    }
   };
 
   const goToBack = () => {

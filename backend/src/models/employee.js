@@ -16,7 +16,7 @@ const employeeModel = new mongoose.Schema(
     website: { type: String },
     filePath: { type: String },
   },
-  { timestamps: true, versionKey: false }
+  { timestamps: true, versionKey: false, }
 );
 
 module.exports = mongoose.model("Employees", employeeModel);

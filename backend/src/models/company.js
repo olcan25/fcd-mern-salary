@@ -14,7 +14,7 @@ const companyModel = new mongoose.Schema(
     phoneNumber: { type: String, default: null },
     email: { type: String, default: null },
     website: { type: String, default: null },
-    file: { type: String, default: null },
+    filePath: { type: String, default: null },
   },
   { timestamps: true, versionKey: false }
 );

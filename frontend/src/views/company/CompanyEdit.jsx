@@ -5,6 +5,7 @@ import { schema } from "../../validation/validation-schema/company";
 import { useDispatch } from "react-redux";
 import { updateCompanyApiRequest } from "../../store/company/actions/company.action.thunk";
 import { useNavigate, useLocation } from "react-router-dom";
+import { singleDeleteFile, singleFileUpload } from "../../api/file.service";
 
 const CompanyEdit = () => {
   const dispatch = useDispatch();
@@ -20,8 +21,30 @@ const CompanyEdit = () => {
   });
 
   const onEdit = (data) => {
-    dispatch(updateCompanyApiRequest(data));
-    navigate("/companies");
+    if(data.fileUpload){
+      editFile(data);
+    }else{
+      dispatch(updateCompanyApiRequest(data));
+      navigate("/companies");
+    }
+  };
+
+  const editFile = (data) => {
+    if (location.state.filePath) {
+      singleDeleteFile({ path: location.state.filePath }).then(() => {
+        console.log("file deleted");
+      });
+    }
+    const formData = new FormData();
+    formData.append("file", data.uploadFile[0]);
+    singleFileUpload(formData)
+      .then((res) => {
+        data.filePath = res.data.path;
+      })
+      .finally(() => {
+        dispatch(updateCompanyApiRequest(data));
+        navigate("/companies");
+      });
   };
 
   const goToBack = () => {
@@ -102,6 +125,15 @@ const CompanyEdit = () => {
             <input
               {...register("additionalInformation")}
               className="form-control"
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Dosya Ekle</label>
+            <input
+              className="form-control"
+              type="file"
+              accept="application/pdf"
+              {...register("uploadFile")}
             />
           </div>
         </div>

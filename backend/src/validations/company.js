@@ -19,6 +19,10 @@ function companySchema(req, res, next) {
     country: Joi.string().allow(""),
     region: Joi.string().allow(""),
     additionalInformation: Joi.string().allow(""),
+    phoneNumber: Joi.string().allow(""),
+    email: Joi.string().allow(""),
+    website: Joi.string().allow(""),
+    filePath: Joi.string().allow(""),
   });
 
   const options = {

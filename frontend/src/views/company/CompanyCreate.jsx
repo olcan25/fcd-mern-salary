@@ -5,6 +5,7 @@ import { schema } from "../../validation/validation-schema/company";
 import { useDispatch } from "react-redux";
 import { createCompanyApiRequest } from "../../store/company/actions/company.action.thunk";
 import { useNavigate } from "react-router-dom";
+import { singleFileUpload } from "../../api/file.service";
 
 const CreateCompany = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,20 @@ const CreateCompany = () => {
   });
 
   const onCreate = (data) => {
-    dispatch(createCompanyApiRequest(data));
+    fileUpload(data);
+  };
+
+  const fileUpload = (data) => {
+    const formData = new FormData();
+    formData.append("file", data.uploadFile[0]);
+    singleFileUpload(formData)
+      .then((res) => {
+        data.filePath = res.data.path;
+      })
+      .then(() => {
+        dispatch(createCompanyApiRequest(data));
+        navigate("/companies");
+      });
   };
 
   const goToBack = () => {
@@ -92,6 +106,14 @@ const CreateCompany = () => {
             <input
               {...register("additionalInformation")}
               className="form-control"
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Dosya Ekle</label>
+            <input
+              className="form-control"
+              type="file"
+              {...register("uploadFile")}
             />
           </div>
         </div>

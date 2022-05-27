@@ -5,7 +5,7 @@ import {
   deleteEmployee,
   updateEmployee,
 } from "../../../api/employee.service";
-import { singleFileUpload } from "../../../api/fileUpload.service";
+import { singleFileUpload } from "../../../api/file.service";
 import {
   successMessage,
   errorMessage,
@@ -24,7 +24,7 @@ export function getEmployeesApiRequest() {
   };
 }
 
-export function createEnployeeeApiRequest(employee) {
+export function createEmployeeApiRequest(employee) {
   return (dispatch) => {
     dispatch(actionCreator.createEmployeeApi(employee));
     createEmployee(employee)
