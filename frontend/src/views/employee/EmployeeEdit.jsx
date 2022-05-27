@@ -5,6 +5,7 @@ import { schema } from "../../validation/validation-schema/employee";
 import { useDispatch } from "react-redux";
 import { updateEmployeeApirequest } from "../../store/employee/effects/employee.effect";
 import { useNavigate, useLocation } from "react-router-dom";
+import { singleFileUpload, singleDeleteFile } from "../../api/file.service";
 
 const EmployeeEdit = () => {
   const dispatch = useDispatch();
@@ -22,8 +23,13 @@ const EmployeeEdit = () => {
   const onEdit = (data) => {
     const date = new Date(data.birthDate);
     data.birthDate = date.setDate(date.getDate() + 1);
-    dispatch(updateEmployeeApirequest(data));
-    navigate("/employees");
+    // duzenleme islemi
+    if (data.uploadFile.length > 0) {
+      editFile(data);
+    } else {
+      dispatch(updateEmployeeApirequest(data));
+      navigate("/employees");
+    }
   };
 
   const goToBack = () => {
@@ -34,6 +40,24 @@ const EmployeeEdit = () => {
     location.state.birthDate = location.state.birthDate.split("T")[0];
     reset(location.state);
   }, [reset]);
+
+  const editFile = (data) => {
+    if (location.state.filePath) {
+      singleDeleteFile({ path: location.state.filePath }).then(() => {
+        console.log("file deleted");
+      });
+    }
+    const formData = new FormData();
+    formData.append("file", data.uploadFile[0]);
+    singleFileUpload(formData)
+      .then((res) => {
+        data.filePath = res.data.path;
+      })
+      .finally(() => {
+        dispatch(updateEmployeeApirequest(data));
+        navigate("/employees");
+      });
+  };
 
   return (
     <form onSubmit={handleSubmit(onEdit)}>
@@ -103,6 +127,15 @@ const EmployeeEdit = () => {
             <input
               {...register("additionalInformation")}
               className="form-control"
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Dosya Ekle</label>
+            <input
+              className="form-control"
+              type="file"
+              accept="application/pdf"
+              {...register("uploadFile")}
             />
           </div>
         </div>

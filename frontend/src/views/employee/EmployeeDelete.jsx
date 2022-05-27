@@ -1,6 +1,8 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { deleteEmployeeApiRequest } from "../../store/employee/effects/employee.effect";
+import { useEffect } from "react";
+import { singleDeleteFile } from "../../api/file.service";
 
 const EmployeeDelete = () => {
   const location = useLocation();
@@ -8,8 +10,17 @@ const EmployeeDelete = () => {
   const dispatch = useDispatch();
 
   const onDelete = (id) => {
+    fileDelete({ path: location.state.filePath });
     dispatch(deleteEmployeeApiRequest(id));
     navigate("/employees");
+  };
+
+  const fileDelete = (path) => {
+    if (path) {
+      singleDeleteFile(path).then((res) => {
+        console.log(res);
+      });
+    }
   };
 
   const goToBack = () => {
@@ -46,6 +57,5 @@ const EmployeeDelete = () => {
     </div>
   );
 };
-
 
 export default EmployeeDelete;

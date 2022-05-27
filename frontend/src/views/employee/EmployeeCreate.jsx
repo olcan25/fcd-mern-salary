@@ -4,8 +4,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "../../validation/validation-schema/employee";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { createEnployeeeApiRequest } from "../../store/employee/effects/employee.effect";
-import { singleFileUpload } from "../../api/fileUpload.service";
+import { createEmployeeApiRequest } from "../../store/employee/effects/employee.effect";
+import { singleFileUpload } from "../../api/file.service";
 
 const EmployeeCreate = () => {
   const dispatch = useDispatch();
@@ -31,10 +31,10 @@ const EmployeeCreate = () => {
     singleFileUpload(formData)
       .then((res) => {
         data.filePath = res.data.path;
-        console.log(data);
       })
-      .then(() => {
-        dispatch(createEnployeeeApiRequest(data));
+      .finally(() => {
+        dispatch(createEmployeeApiRequest(data));
+        navigate("/employees");
       });
   };
 
@@ -117,6 +117,7 @@ const EmployeeCreate = () => {
             <input
               className="form-control"
               type="file"
+              accept="application/pdf"
               {...register("uploadFile")}
             />
           </div>

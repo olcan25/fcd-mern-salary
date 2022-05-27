@@ -22,4 +22,5 @@ export const schema = yup.object().shape({
   country: yup.string().nullable(),
   region: yup.string().nullable(),
   additionalInformation: yup.string().nullable(),
+  filePath: yup.string(),
 });

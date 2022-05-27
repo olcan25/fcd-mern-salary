@@ -3,13 +3,13 @@ const routers = express.Router();
 const employeeRouters = require('./employee');
 const companyRouters = require('./company');
 const salaryRouters = require('./salary');
-const uploadRouters = require('./uploadFile');
+const uploadRouters = require('./file');
 
 
 routers.use('/employees', employeeRouters)
 routers.use('/companies', companyRouters)
 routers.use('/salaries', salaryRouters)
-routers.use('/uploads', uploadRouters)
+routers.use('/files', uploadRouters)
 
 
 module.exports = routers;
