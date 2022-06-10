@@ -7,22 +7,26 @@ const {
 function companySchema(req, res, next) {
   const schema = Joi.object({
     name: Joi.string().required(),
-    tradeName: Joi.string().allow(""),
+    tradeName: Joi.string().default(""),
     uidNumber: Joi.string()
       .required()
       .custom(startsWithUidNumber)
       .max(9)
       .min(9),
-    vatNumber: Joi.string().allow("").custom(startsWithVatNumber).max(9).min(9),
-    address: Joi.string().allow(""),
-    city: Joi.string().allow(""),
-    country: Joi.string().allow(""),
-    region: Joi.string().allow(""),
-    additionalInformation: Joi.string().allow(""),
-    phoneNumber: Joi.string().allow(""),
-    email: Joi.string().allow(""),
-    website: Joi.string().allow(""),
-    filePath: Joi.string().allow(""),
+    vatNumber: Joi.string()
+      .default("")
+      .custom(startsWithVatNumber)
+      .max(9)
+      .min(9),
+    address: Joi.string().default(""),
+    city: Joi.string().default(""),
+    country: Joi.string().default(""),
+    region: Joi.string().default(""),
+    additionalInformation: Joi.string().default(""),
+    phoneNumber: Joi.string().default(""),
+    email: Joi.string().default(""),
+    website: Joi.string().default(""),
+    filePath: Joi.string().default(""),
   });
 
   const options = {

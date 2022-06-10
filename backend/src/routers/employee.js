@@ -13,10 +13,10 @@ router.get("/", getAllEmployees);
 
 router.get("/:id", getByIdEmployee);
 
-router.post("/", employeeSchema, createEmployee);
+router.post("/", createEmployee);
 
 router.delete("/:id", deleteByIdEmployee);
 
-router.put("/:id", employeeSchema, updateByIdEmployee);
+router.put("/:id", updateByIdEmployee);
 
 module.exports = router;

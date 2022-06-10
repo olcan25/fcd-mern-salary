@@ -13,10 +13,10 @@ router.get("/", getAllCompanies);
 
 router.get("/:id", getByIdCompany);
 
-router.post("/", companySchema, createCompany);
+router.post("/", createCompany);
 
 router.delete("/:id", deleteByIdCompany);
 
-router.put("/:id", companySchema, updateByIdCompany);
+router.put("/:id", updateByIdCompany);
 
 module.exports = router;

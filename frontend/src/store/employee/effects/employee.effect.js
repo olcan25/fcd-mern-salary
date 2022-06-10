@@ -5,7 +5,7 @@ import {
   deleteEmployee,
   updateEmployee,
 } from "../../../api/employee.service";
-import { singleFileUpload } from "../../../api/file.service";
+//import { singleFileUpload } from "../../../api/file.service";
 import {
   successMessage,
   errorMessage,
@@ -29,7 +29,7 @@ export function createEmployeeApiRequest(employee) {
     dispatch(actionCreator.createEmployeeApi(employee));
     createEmployee(employee)
       .then((response) => {
-        successMessage("Yeni Şirket Oluşturuldu");
+        successMessage("Yeni Personel Oluşturuldu");
         dispatch(
           actionCreator.createEmployeeApiSuccess({
             ...response.data.data,
@@ -38,7 +38,7 @@ export function createEmployeeApiRequest(employee) {
         console.log("response ", response);
       })
       .catch((error) => {
-        errorMessage(`Yeni Şirket Oluşturulamadı ${error.response.data}`);
+        errorMessage(`Yeni Personel Oluşturulamadı ${error.response.data}`);
         dispatch(actionCreator.createEmployeeApiError(error));
       });
   };
@@ -49,11 +49,11 @@ export function deleteEmployeeApiRequest(id) {
     dispatch(actionCreator.deleteEmployeeApi(id));
     deleteEmployee(id)
       .then((response) => {
-        successMessage("Şirket Silindi");
+        successMessage("Personel Silindi");
         dispatch(actionCreator.deleteEmployeeApiSuccess(id));
       })
       .catch((error) => {
-        errorMessage(`Şirket Silinemedi ${error.response.data}`);
+        errorMessage(`Personel Silinemedi ${error.response.data}`);
         dispatch(actionCreator.deleteEmployeeApiError(error));
       });
   };
@@ -64,13 +64,13 @@ export function updateEmployeeApirequest(employee) {
     dispatch(actionCreator.updateEmployeeApi(employee));
     updateEmployee(employee)
       .then((response) => {
-        successMessage("Şirket Bilgileri Duzenlendi");
+        successMessage("Personel Bilgileri Duzenlendi");
         dispatch(
           actionCreator.updateEmployeeApiSuccess(response.data.data._id)
         );
       })
       .catch((error) => {
-        errorMessage(`Şirket Bilgileri Duzenlenemedi ${error.response.data}`);
+        errorMessage(`Personel Bilgileri Duzenlenemedi ${error.response.data}`);
         dispatch(actionCreator.updateEmployeeApiError(error));
       });
   };
